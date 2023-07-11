@@ -96,21 +96,11 @@ colcon build --packages-select hobot_vio \
 并执行如下命令运行：
 
 
-### **Ubuntu X3**
-
-```shell
-export COLCON_CURRENT_PREFIX=./install
-source ./install/setup.bash
-
-# 启动vio节点
-ros2 run hobot_vio hobot_vio
-
-```
-
 ### **Ubuntu X3 Launch启动**
 
 ```shell
 export COLCON_CURRENT_PREFIX=./install
+source /opt/ros/foxy/setup.bash
 source ./install/setup.bash
 
 # 启动agent node
