@@ -59,10 +59,10 @@ public:
             this->get_logger(), "imu_que_limit: " << imu_queue_limit_);
 
     sub_imu_ = this->create_subscription<sensor_msgs::msg::Imu>(
-            sub_imu_topic_, 100,
+            sub_imu_topic_, 1000,
             std::bind(&Ros2SubNode::CollectImu, this, std::placeholders::_1));
     sub_img_ = this->create_subscription<sensor_msgs::msg::Image>(
-            sub_image_topic_, 10,
+            sub_image_topic_, 30,
             std::bind(&Ros2SubNode::CollectImage, this, std::placeholders::_1));
 
 //    sub_com_img_ = this->create_subscription<sensor_msgs::msg::CompressedImage>(

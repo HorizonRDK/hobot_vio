@@ -18,8 +18,8 @@ def generate_launch_description():
         executable='hobot_vio',
         output='screen',
         parameters=[
-            {"path_config": "/opt/tros/lib/hobot_vio/config/realsenseD435i_color.yaml"},
-            {"image_topic": "/camera/color/image_raw"},
+            {"path_config": "/opt/tros/lib/hobot_vio/config/realsenseD435i.yaml"},
+            {"image_topic": "/camera/infra1/image_rect_raw"},
             {"imu_topic": "/camera/imu"},
             {"sample_gap": 2}
         ],
@@ -29,20 +29,29 @@ def generate_launch_description():
     realsense_node = ExecuteProcess(
         cmd=[[
             'ros2 launch realsense2_camera rs_launch.py ',
-            ' rgb_camera.profile:=', '640x480x30',
+            ' depth_module.profile:=', '640x480x30',
             ' enable_depth:=', 'false',
-            ' enable_color:=', 'true',
+            ' enable_color:=', 'false',
             ' enable_gyro:=', 'true',
             ' enable_accel:=', 'true',
             ' enable_sync:=', 'true',
             ' gyro_fps:=', '200',
             ' accel_fps:=', '200',
-            ' unite_imu_method:=', '2'
+            ' unite_imu_method:=', '2',
+            ' enable_infra1:=', 'true'
+        ]],
+        shell=True
+    )
+
+    boost = ExecuteProcess(
+        cmd=[[
+            'echo 1 > /sys/devices/system/cpu/cpufreq/boost '
         ]],
         shell=True
     )
 
     return LaunchDescription([
         horizon_vio_node,
-        realsense_node
+        realsense_node,
+        boost
     ])

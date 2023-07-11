@@ -12,6 +12,7 @@ gyroscope_random_walk: 2.84378581073e-05
 accelerometer_noise_density: 0.011496108364
 accelerometer_random_walk: 0.00027
 init_imu_thresh: 0.4
+fast_threshold: 15
 # camera intrinsics
 cam_width: 640
 cam_height: 480
