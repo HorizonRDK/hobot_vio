@@ -38,11 +38,6 @@ Realsense与RDK X3连接方式如下图：
 sudo apt update
 sudo apt install -y tros-vio
 ```
-程序运行后，会进入等待初始化状态，此时必须相机必须保持静止。
- ![init](./imgs/init.png)
-此时相机向前平移一段距离，此时算法检测到相机平移则会完成初始化，
-此时相机持续运动，开始视觉与惯性的融合定位过程。
- ![run](./imgs/run.png)
  
 **2.运行VIO功能**
 
@@ -55,6 +50,12 @@ source /opt/tros/local_setup.bash
 
 ros2 launch hobot_vio hobot_vio.launch.py 
 ```
+
+程序运行后，会进入等待初始化状态，此时必须相机必须保持静止。
+ ![init](./imgs/init.png)
+此时相机向前平移一段距离，此时算法检测到相机平移则会完成初始化，
+此时相机持续运动，开始视觉与惯性的融合定位过程。
+ ![run](./imgs/run.png)
 
 **3.查看效果**
 这里采用rivz2的方式观察VIO算法的效果，需要在PC上安装ROS2。并且保证PC与RDK X3处于同一网段。
