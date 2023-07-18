@@ -22,7 +22,8 @@
 - 地平线RDK已安装
 - realsense连接到RDK X3 USB 3.0接口
 
-算法订阅realsense相机的图像和IMU数据作为算法的输入，经过计算得到相机的轨迹信息，并通过ROS2的话题机制发布相机的运动轨迹，轨迹结果可在PC的rviz2软件查看。
+算法订阅realsense相机的图像和IMU数据作为算法的输入，经过计算得到相机的轨迹信息，
+并通过ROS2的话题机制发布相机的运动轨迹，轨迹结果可在PC的rviz2软件查看。
 
 ![vio_rviz](./imgs/hobot_vio_rviz.jpeg)
 ## 硬件连接
@@ -37,11 +38,15 @@ Realsense与RDK X3连接方式如下图：
 sudo apt update
 sudo apt install -y tros-vio
 ```
-
-
+程序运行后，会进入等待初始化状态，此时必须相机必须保持静止。
+ ![init](./imgs/init.png)
+此时相机向前平移一段距离，此时算法检测到相机平移则会完成初始化，
+此时相机持续运动，开始视觉与惯性的融合定位过程。
+ ![run](./imgs/run.png)
+ 
 **2.运行VIO功能**
 
-启动命令：
+启动命令，launch文件内包含启动realsense相机和vio算法模块的命令，所以只用运行一个launch文件即可：
 
 ```shell
 # 配置tros.b环境
@@ -59,6 +64,9 @@ rviz2的话题订阅如下图所示，详细的话题解释在“接口说明”
 
 
 # 接口说明
+
+ ![module](./imgs/module.png)
+
 
 ## 输入topic
 | 参数名 | 类型 | 解释  | 是否必须 | 默认值 |
