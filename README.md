@@ -1,7 +1,7 @@
 # 功能介绍
 
 视觉惯性里程计（Visual Inertial Odometry，VIO）是融合相机与惯性测量单元（Inertial Measurement Unit，IMU）数据实现机器人定位的算法。VIO定位算法具有成本低、适用环境广等优点，在室外环境下能够有效弥补卫星定位中遮挡、多路径干扰等失效场景。优秀、鲁棒的VIO算法是实现室外高精度导航定位的关键。
-![](./imgs/hobot_vio_rviz.jpeg)
+
 
 代码仓库：<https://github.com/HorizonRDK/hobot_vio.git>
 
@@ -10,7 +10,7 @@
 | 机器人名称          | 生产厂家 | 参考链接                                                     |
 | :------------------ | -------- | ------------------------------------------------------------ |
 | RDK X3             | 多厂家 | [点击跳转](https://developer.horizon.cc/sunrise) |
-| realsense             | Intel RealSense D435i |                |
+| realsense          | Intel RealSense D435i |             |
 
 # 使用方法
 
@@ -19,14 +19,16 @@
 在体验之前，需要具备以下基本条件：
 
 - 地平线RDK已烧录好地平线提供的Ubuntu 20.04系统镜像
-- realsense确连接到RDK X3 USB 3.0接口
+- 地平线RDK已安装
+- realsense连接到RDK X3 USB 3.0接口
 
-算法订阅realsense相机的图像和IMU数据作为算法的输入，经过计算得到相机的轨迹信息，并通过ROS2的话题机制发布相机的运动轨迹，轨迹结果可在PC的rviz2软件查看。算法的输入和输出topic如下表所示：
+算法订阅realsense相机的图像和IMU数据作为算法的输入，经过计算得到相机的轨迹信息，并通过ROS2的话题机制发布相机的运动轨迹，轨迹结果可在PC的rviz2软件查看。
 
-
-
-# 使用方法
-
+![vio_rviz](./imgs/hobot_vio_rviz.jpeg)
+## 硬件连接
+Realsense与RDK X3连接方式如下图：
+ ![realsense-x3](./imgs/realsense-x3.jpg)
+ 
 **1.安装功能包**
 
 启动机器人后，通过终端或者VNC连接机器人，点击本页面右上方的“一键部署”按钮，复制如下命令在RDK的系统上运行，完成相关Node的安装。
@@ -50,7 +52,9 @@ ros2 launch hobot_vio hobot_vio.launch.py
 ```
 
 **3.查看效果**
-
+这里采用rivz2的方式观察VIO算法的效果，需要在PC上安装ROS2。并且保证PC与RDK X3处于同一网段。
+rviz2的话题订阅如下图所示，详细的话题解释在“接口说明”一节：
+ ![rviz_set](./imgs/rviz_set.jpg)
 
 
 
@@ -74,4 +78,26 @@ ros2 launch hobot_vio hobot_vio.launch.py
 
 
 # 常见问题
-
+1、Ubuntu下运行启动命令报错-bash: ros2: command not found
+当前终端未设置ROS2环境，执行命令配置环境：
+```
+source /opt/tros/local_setup.bash
+```
+2、如何在RDK上安装realsense的ROS2 package
+```
+sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-key F6E65AC044F831AC80A06380C8B3A55A6F3EFCDE 
+sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-key F6E65AC044F831AC80A06380C8B3A55A6F3EFCDE
+sudo curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(source /etc/os-release && echo $UBUNTU_CODENAME) main" | sudo tee /etc/apt/sources.list.d/ros2.list > /dev/null
+sudo apt-get install software-properties-common
+sudo add-apt-repository "deb https://librealsense.intel.com/Debian/apt-repo $(lsb_release -cs) main" -u
+sudo apt-get update
+sudo apt=-get install ros-foxy-librealsense2* ros-foxy-realsense2-camera ros-foxy-realsense2-description -y
+```
+3、如何保存VIO算法的轨迹
+程序启动之后会实时保存轨迹到文件，文件名为 trans_quat_camera_xx.txt。文件内容如下：
+```
+1688615183.065757036 -0.081376 -0.040180 0.030833 -0.501420 -0.461689 0.520512 0.514285
+......
+```
+数据列分别为时间戳、x、y、z坐标、四元数w、x、y、z。
