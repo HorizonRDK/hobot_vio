@@ -62,7 +62,8 @@ ros2 launch hobot_vio hobot_vio.launch.py
 rviz2的话题订阅如下图所示，详细的话题解释在“接口说明”一节：
  ![rviz_set](./imgs/rviz_set.jpg)
 
-
+ 展示效果如下动图所示
+![rviz_run](./imgs/out.gif)
 
 # 接口说明
 
