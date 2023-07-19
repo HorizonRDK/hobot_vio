@@ -9,7 +9,7 @@
 
 | 机器人名称          | 生产厂家 | 参考链接                                                     |
 | :------------------ | -------- | ------------------------------------------------------------ |
-| RDK X3             | 多厂家 | [点击跳转](https://developer.horizon.cc/sunrise) |
+| RDK X3             | 具体见参考链接 | [点击跳转](https://developer.horizon.cc/sunrise) |
 | realsense          | Intel RealSense D435i |             |
 
 # 使用方法
@@ -84,8 +84,6 @@ rviz2的话题订阅如下图所示，详细的话题解释在“接口说明”
 | ----- | ----| -----| 
 | horizon_vio/horizon_vio_path  | nav_msgs::msg::Path | vio算法输出的机器人运动轨迹  |
 
-# 参考资料
-
 
 # 常见问题
 1、Ubuntu下运行启动命令报错-bash: ros2: command not found
@@ -95,6 +93,7 @@ source /opt/tros/local_setup.bash
 ```
 2、如何在RDK上安装realsense的ROS2 package
 ```
+# 以ROS2 Foxy版本为例
 sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-key F6E65AC044F831AC80A06380C8B3A55A6F3EFCDE 
 sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-key F6E65AC044F831AC80A06380C8B3A55A6F3EFCDE
 sudo curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg
@@ -105,7 +104,7 @@ sudo apt-get update
 sudo apt=-get install ros-foxy-librealsense2* ros-foxy-realsense2-camera ros-foxy-realsense2-description -y
 ```
 3、如何保存VIO算法的轨迹
-程序启动之后会实时保存轨迹到文件，文件名为 trans_quat_camera_xx.txt。文件内容如下：
+程序启动之后会自动实时保存轨迹到文件，文件名为 trans_quat_camera_xx.txt。文件内容如下：
 ```
 1688615183.065757036 -0.081376 -0.040180 0.030833 -0.501420 -0.461689 0.520512 0.514285
 ......
