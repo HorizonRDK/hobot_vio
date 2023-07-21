@@ -110,3 +110,7 @@ sudo apt=-get install ros-foxy-librealsense2* ros-foxy-realsense2-camera ros-fox
 ......
 ```
 数据列分别为时间戳、x、y、z坐标、四元数w、x、y、z。
+
+4、VIO注意事项：
+a. 单目VIO运行前需要进行初始化，具体见“2.运行VIO功能”这一节。
+b. 移动相机过程中尽量平缓。
